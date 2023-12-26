@@ -1,0 +1,44 @@
+#include <algorithm>
+#include <fstream>
+#include <getopt.h>
+#include <iomanip>
+#include <iostream>
+#include <iterator>
+#include <string>
+#include <vector>
+using namespace std;
+
+struct linearqueue {
+
+  int processus[6];
+};
+
+void insert(linearqueue *l, int mytimer, int marge) {
+  for (int i = 0; i < marge; i++) {
+
+    int *process = l[i].processus;
+    if (process[5] == 0 && process[1] == mytimer) {
+      process[5] = 1;
+    }
+  }
+}
+
+void executionProcess(linearqueue *eProcesses, int eProcessTE, int marge) {
+  int counter = 0;
+
+  for (int i = 0; i < marge; i++) {
+
+    int *process = eProcesses[i].processus;
+    if (i == eProcessTE && process[4] == 0) {
+      process[0] = process[0] - 1;
+
+      if (process[0] == 0) {
+        process[4] = 1;
+      }
+
+    } else if (process[5] == 1 && process[4] == 0) {
+      process[3] = process[3] + 1;
+    }
+
+    counter++;
+  }
