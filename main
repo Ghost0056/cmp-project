@@ -42,3 +42,24 @@ void executionProcess(linearqueue *eProcesses, int eProcessTE, int marge) {
 
     counter++;
   }
+}
+
+int schedulingProcessChoice(linearqueue *l, int type, int marge) {
+  int processSelected = -1;
+  int lowestProcess = 0;
+  int counter = 0;
+  bool boolProcessSelected = false;
+
+  for (int i = 0; i < marge; i++) {
+
+    int *process = l[i].processus;
+
+    if ((boolProcessSelected == false && process[5] == 1 && process[4] == 0) ||
+        (boolProcessSelected == true && process[5] == 1 && process[4] == 0 &&
+         process[type] < lowestProcess)) {
+      lowestProcess = process[type];
+      processSelected = counter;
+      boolProcessSelected = true;
+    }
+    counter++;
+  }
