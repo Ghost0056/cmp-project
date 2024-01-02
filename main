@@ -63,3 +63,24 @@ int schedulingProcessChoice(linearqueue *l, int type, int marge) {
     }
     counter++;
   }
+
+ return processSelected;
+}
+
+void schedulingPreemptive(linearqueue *pProcesses, int type, int marge) {
+  bool tester = true;
+  int time = 0;
+  cout << "schedulingPreemptive start\n";
+  while (tester == true) {
+    insert(pProcesses, time, marge);
+    int processesToExecute = schedulingProcessChoice(pProcesses, type, marge);
+    if (processesToExecute == -1) {
+      tester = false;
+    } else {
+      executionProcess(pProcesses, processesToExecute, marge);
+      time++;
+    }
+  }
+  cout << "Scheduling Finish\n";
+  cout << time << "time\n";
+}
