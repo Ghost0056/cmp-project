@@ -105,3 +105,32 @@ void schedulingNonPreemptive(linearqueue *pProcesses, int type, int marge) {
   cout << "Scheduling Finish\n";
   cout << time << "time\n";
 }
+
+void schedulingRoundRobin(linearqueue *pProcesses, int quantum, int marge) {
+  bool tester = true;
+  int time = 0;
+  cout << "schedulingRoundRobin start\n";
+  insert(pProcesses, time, marge);
+  int processListSize = marge;
+  int currentprocess = 0;
+  while (tester == true) {
+    for (int i = 0; i < quantum; i++) {
+      int processesToExecute = schedulingProcessChoice(pProcesses, 1, marge);
+      int *process = pProcesses[currentprocess].processus;
+      if (processesToExecute == -1) {
+        tester = false;
+        break;
+      } else if (process[4] == 1) {
+        break;
+      } else {
+        executionProcess(pProcesses, currentprocess, marge);
+        insert(pProcesses, time, marge);
+        time++;
+      }
+    }
+    currentprocess++;
+    if (currentprocess == processListSize) {
+      currentprocess = 0;
+    }
+  }
+}
