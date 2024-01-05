@@ -93,3 +93,15 @@ void schedulingNonPreemptive(linearqueue *pProcesses, int type, int marge) {
     int processesToExecute = schedulingProcessChoice(pProcesses, type, marge);
     if (processesToExecute == -1) {
       tester = false;
+} else {
+      int *process = pProcesses[processesToExecute].processus;
+      while (process[4] == 0) {
+        executionProcess(pProcesses, processesToExecute, marge);
+        time++;
+        insert(pProcesses, time, marge);
+      }
+    }
+  }
+  cout << "Scheduling Finish\n";
+  cout << time << "time\n";
+}
