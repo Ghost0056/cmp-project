@@ -143,3 +143,10 @@ float getAverage(linearqueue *pProcesses, int marge) {
   }
   return (sum / 5);
 }
+
+void showWaitingTime(linearqueue *pProcesses, int marge) {
+  for (int i = 0; i < marge; i++) {
+    int *process = pProcesses[i].processus;
+    cout << "P" << i + 1 << ": " << process[3] << "ms \n";
+  }
+}
