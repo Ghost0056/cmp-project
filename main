@@ -150,3 +150,16 @@ void showWaitingTime(linearqueue *pProcesses, int marge) {
     cout << "P" << i + 1 << ": " << process[3] << "ms \n";
   }
 }
+
+void writeFile(string output) {
+
+  ofstream files;
+  files.open(output);
+
+  cout << "ENTER YOUR MESSAGE";
+
+  files << "Average :"
+        << "ms \n";
+
+  files.close();
+}
