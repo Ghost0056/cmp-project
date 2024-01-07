@@ -134,3 +134,12 @@ void schedulingRoundRobin(linearqueue *pProcesses, int quantum, int marge) {
     }
   }
 }
+
+float getAverage(linearqueue *pProcesses, int marge) {
+  int sum = 0;
+  for (int i = 0; i < marge; i++) {
+    int *process = pProcesses[i].processus;
+    sum = sum + process[3];
+  }
+  return (sum / 5);
+}
