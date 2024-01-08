@@ -187,3 +187,25 @@ int main(int argc, char *argv[]) {
       break;
     }
   }
+
+if (input == NULL || output == NULL) {
+    cout << "use the parameter u for input and o for output";
+    exit(0);
+  }
+  int nbreofline = 0;
+  vector<linearqueue> tempArray;
+
+  std::ifstream file(input);
+  std::string str;
+
+  while (std::getline(file, str)) {
+    vector<string> words;
+    string delimiter = ":";
+    
+    int pos;
+    string text = str;
+
+    while ((pos = text.find(delimiter)) != string::npos) {
+      words.push_back(text.substr(0, pos));
+      text.erase(0, pos + delimiter.length());
+    }
