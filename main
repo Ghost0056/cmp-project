@@ -163,3 +163,27 @@ void writeFile(string output) {
 
   files.close();
 }
+
+char *input = NULL;
+char *output = NULL;
+
+int main(int argc, char *argv[]) {
+  int c;
+
+  if (argc < 2) {
+    cout << "You should introduce 2 arguments";
+    exit(0);
+  }
+
+  while ((c = getopt(argc, argv, "f:o:")) != -1) {
+    switch (c) {
+    case 'f':
+      input = optarg;
+      break;
+    case 'o':
+      output = optarg;
+      break;
+    default:
+      break;
+    }
+  }
