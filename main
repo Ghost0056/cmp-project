@@ -3,32 +3,31 @@
 #include <getopt.h>
 #include <iomanip>
 #include <iostream>
+#include <vector>
 #include <iterator>
 #include <string>
-#include <vector>
 using namespace std;
 
 struct linearqueue {
-
-  int processus[6];
+int processus[6];
 };
 
-void insert(linearqueue *l, int mytimer, int marge) {
+void insert(linearqueue *l, int time, int marge) {
   for (int i = 0; i < marge; i++) {
 
     int *process = l[i].processus;
-    if (process[5] == 0 && process[1] == mytimer) {
+    if (process[5] == 0 && process[1] == time) {
       process[5] = 1;
     }
   }
 }
 
-void executionProcess(linearqueue *eProcesses, int eProcessTE, int marge) {
+void execution(linearqueue *aProcesses, int eProcessTE, int marge) {
   int counter = 0;
 
   for (int i = 0; i < marge; i++) {
 
-    int *process = eProcesses[i].processus;
+    int *process = aProcesses[i].processus;
     if (i == eProcessTE && process[4] == 0) {
       process[0] = process[0] - 1;
 
@@ -44,7 +43,7 @@ void executionProcess(linearqueue *eProcesses, int eProcessTE, int marge) {
   }
 }
 
-int schedulingProcessChoice(linearqueue *l, int type, int marge) {
+int scheduling_Processes(linearqueue *l, int type, int marge) {
   int processSelected = -1;
   int lowestProcess = 0;
   int counter = 0;
@@ -64,67 +63,67 @@ int schedulingProcessChoice(linearqueue *l, int type, int marge) {
     counter++;
   }
 
- return processSelected;
+  return processSelected;
 }
-
-void schedulingPreemptive(linearqueue *pProcesses, int type, int marge) {
+void scheduling_Preemptive(linearqueue *aProcesses, int type, int marge) {
   bool tester = true;
   int time = 0;
-  cout << "schedulingPreemptive start\n";
+  cout << "schedulingPreemptive begins"<<endl;
   while (tester == true) {
-    insert(pProcesses, time, marge);
-    int processesToExecute = schedulingProcessChoice(pProcesses, type, marge);
+    insert(aProcesses, time, marge);
+    int processesToExecute = scheduling_Processes(aProcesses, type, marge);
     if (processesToExecute == -1) {
       tester = false;
     } else {
-      executionProcess(pProcesses, processesToExecute, marge);
+      executionProcess(aProcesses, processesToExecute, marge);
       time++;
     }
   }
-  cout << "Scheduling Finish\n";
-  cout << time << "time\n";
+  cout << "Scheduling Finished"<<endl;
+  cout << time << "time"<<endl;
 }
-void schedulingNonPreemptive(linearqueue *pProcesses, int type, int marge) {
+
+void scheduling_NonPreemptive(linearqueue *aProcesses, int type, int marge) {
   bool tester = true;
   int time = 0;
-  cout << "schedulingNonPreemptive start\n";
-  insert(pProcesses, time, marge);
+  cout << "schedulingNonPreemptive begins\n";
+  insert(aProcesses, time, marge);
   while (tester == true) {
-    int processesToExecute = schedulingProcessChoice(pProcesses, type, marge);
+    int processesToExecute = scheduling_Processes(aProcesses, type, marge);
     if (processesToExecute == -1) {
       tester = false;
-} else {
-      int *process = pProcesses[processesToExecute].processus;
+    } else {
+      int *process = aProcesses[processesToExecute].processus;
       while (process[4] == 0) {
-        executionProcess(pProcesses, processesToExecute, marge);
+        executionProcess(aProcesses, processesToExecute, marge);
         time++;
-        insert(pProcesses, time, marge);
+        insert(aProcesses, time, marge);
       }
     }
   }
-  cout << "Scheduling Finish\n";
-  cout << time << "time\n";
+  cout << "Scheduling Finishes"<<endl;
+  cout << time << "time"<<endl;
 }
 
-void schedulingRoundRobin(linearqueue *pProcesses, int quantum, int marge) {
+void RoundRobin(linearqueue *aProcesses, int q, int marge) {
   bool tester = true;
   int time = 0;
-  cout << "schedulingRoundRobin start\n";
-  insert(pProcesses, time, marge);
+  cout << "RoundRobin begins"<<endl;
+  insert(aProcesses, time, marge);
   int processListSize = marge;
   int currentprocess = 0;
   while (tester == true) {
-    for (int i = 0; i < quantum; i++) {
-      int processesToExecute = schedulingProcessChoice(pProcesses, 1, marge);
-      int *process = pProcesses[currentprocess].processus;
+    for (int i = 0; i < q; i++) {
+      int processesToExecute = scheduling_Processes(aProcesses, 1, marge);
+      int *process = aProcesses[currentprocess].processus;
       if (processesToExecute == -1) {
         tester = false;
         break;
       } else if (process[4] == 1) {
         break;
       } else {
-        executionProcess(pProcesses, currentprocess, marge);
-        insert(pProcesses, time, marge);
+        executionProcess(aProcesses, currentprocess, marge);
+        insert(aProcesses, time, marge);
         time++;
       }
     }
@@ -135,31 +134,31 @@ void schedulingRoundRobin(linearqueue *pProcesses, int quantum, int marge) {
   }
 }
 
-float getAverage(linearqueue *pProcesses, int marge) {
-  int sum = 0;
+float Average(linearqueue *aProcesses, int marge) {
+  int Sum = 0;
   for (int i = 0; i < marge; i++) {
-    int *process = pProcesses[i].processus;
-    sum = sum + process[3];
+    int *process = aProcesses[i].processus;
+    Sum = Sum + process[3];
   }
-  return (sum / 5);
+  return (Sum / 5);
+}
+void Time_Waiting(linearqueue *aProcesses, int marge) {
+  for (int i = 0; i < marge; i++) {
+    int *process = aProcesses[i].processus;
+    cout << "P" << i + 1 << ": " << process[3] << "ms "<<endl;
+  }
 }
 
-void showWaitingTime(linearqueue *pProcesses, int marge) {
-  for (int i = 0; i < marge; i++) {
-    int *process = pProcesses[i].processus;
-    cout << "P" << i + 1 << ": " << process[3] << "ms \n";
-  }
-}
-
-void writeFile(string output) {
+void Write(string output) {
 
   ofstream files;
   files.open(output);
 
-  cout << "ENTER YOUR MESSAGE";
+  cout << "Write YOUR MESSAGE"<<endl;
 
   files << "Average :"
-        << "ms \n";
+    cout << " "<<endl;
+        << "ms";
 
   files.close();
 }
@@ -167,20 +166,21 @@ void writeFile(string output) {
 char *input = NULL;
 char *output = NULL;
 
-int main(int argc, char *argv[]) {
-  int c;
+int main(int arg, char *avg[]) {
+  int b;
 
-  if (argc < 2) {
-    cout << "You should introduce 2 arguments";
+  if (arg < 2) {
+    cout << "You should use 2 arguments";
     exit(0);
   }
 
-  while ((c = getopt(argc, argv, "f:o:")) != -1) {
-    switch (c) {
+
+while ((b = getopt(arg, avg, "f:o:")) != -1) {
+    switch (b) {
     case 'f':
       input = optarg;
       break;
-    case 'o':
+    case 'g':
       output = optarg;
       break;
     default:
@@ -188,18 +188,18 @@ int main(int argc, char *argv[]) {
     }
   }
 
-if (input == NULL || output == NULL) {
-    cout << "use the parameter u for input and o for output";
+  if (input == NULL || output == NULL) {
+    cout << "use the parameter f for input and g for output";
     exit(0);
   }
   int nbreofline = 0;
-  vector<linearqueue> tempArray;
+  vector<linearqueue> tempArray{};
 
   std::ifstream file(input);
   std::string str;
 
   while (std::getline(file, str)) {
-    vector<string> words;
+    vector<string> words{};
     string delimiter = ":";
     
     int pos;
@@ -209,3 +209,24 @@ if (input == NULL || output == NULL) {
       words.push_back(text.substr(0, pos));
       text.erase(0, pos + delimiter.length());
     }
+    int p[6];
+    int count = 0;
+    for (const auto &str : words) {
+      p[count] = stoi(str);
+      count++;
+    }
+    p[2] = stoi(text);
+    p[3] = 0;
+    p[4] = 0;
+    p[5] = 0;
+    linearqueue S1 = {{p[0], p[1], p[2], p[3], p[4], p[5]}};
+    tempArray.push_back(S1);
+    nbreofline++;
+  }
+
+  linearqueue processes[nbreofline];
+  int m = 0;
+  for (const auto &ar : tempArray) {
+    processes[j] = ar;
+    m++;
+  }
