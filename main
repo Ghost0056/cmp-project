@@ -230,3 +230,14 @@ while ((b = getopt(arg, avg, "f:o:")) != -1) {
     processes[j] = ar;
     m++;
   }
+
+int Action_Selected;
+  int h = 0;
+  bool finish = false;
+  while (finish == false) {
+    cout << "Choose Your Action : "<<endl;
+    cout << "1. Scheduling Preemptinve"<<endl;
+    cout << "2. Scheduling Non_Preemptinve"<<endl;
+    cout << "3. Display Result"<<endl;
+    cout << "4. Terminate Program"<<endl;
+    cin >> Action_Selected;
