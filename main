@@ -241,3 +241,40 @@ int Action_Selected;
     cout << "3. Display Result"<<endl;
     cout << "4. Terminate Program"<<endl;
     cin >> Action_Selected;
+switch (Action_Selected) {
+    case 1: {
+      int preemptiveSchedulingChoice;
+      cout << "Choose Between the five Scheduling Preemptinve Type "<<endl;
+      cout << "1. None\n";
+      cout << "2. First Come, First Served Scheduling"<<endl;
+      cout << "3. Shortest-Job-First Scheduling"<<endl;
+      cout << "4. Priority Scheduling"<<endl;
+      cout << "5. Round-Robin Scheduling"<<endl;
+      cin >> preemptiveSchedulingChoice;
+      switch (preemptiveSchedulingType) {
+      case 1:
+        cout << "None\n";
+        break;
+      case 2:
+        cout << "First Come, First Served Scheduling"<<endl;
+        scheduling_Preemptive(processes, 1, nbreofline);
+        break;
+      case 3:
+        cout << "Shortest-Job-First Scheduling\n";
+        scheduling_Preemptive(processes, 0, nbreofline);
+        break;
+      case 4:
+        cout << "Priority Scheduling\n";
+        scheduling_Preemptive(processes, 2, nbreofline);
+        break;
+      case 5:
+        cout << "Round-Robin Scheduling\n";
+        cout << "Insert Q\n";
+        int q;
+        cin >> q;
+        scheduling_RoundRobin(processes, q, nbreofline);
+        break;
+      default:
+        cout << "choose between 1 - 5";
+        break;
+      }
