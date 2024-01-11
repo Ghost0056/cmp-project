@@ -295,3 +295,75 @@ int main(int argc, char *argv[]) {
         cout << "you have to choose between 1 - 5";
         break;
       }
+
+} break;
+    case 2: {
+      int nonPreemptiveSchedulingOption;
+      cout << "Choose Between the 5 Scheduling Non Preemptinve Type \n";
+      cout << "1. None\n";
+      cout << "2. First Come First Serve Scheduling\n";
+      cout << "3. Shortest Job First Scheduling\n";
+      cout << "4. Priority Scheduling\n";
+      cin >> nonPreemptiveSchedulingOption;
+      switch (nonPreemptiveSchedulingOption) {
+      case 1:
+        cout << "None Scheduling method choosen try again \n";
+        break;
+      case 2:
+        cout << "First Come, First Served Scheduling\n";
+        Schedule_Non_Preemptive(processes, 1, nbreofline);
+
+        break;
+      case 3:
+        cout << "Shortest-Job-First Scheduling\n";
+        Schedule_Non_Preemptive(processes, 0, nbreofline);
+        break;
+      case 4:
+        cout << "Priority Scheduling\n";
+        Schedule_Non_Preemptive(processes, 2, nbreofline);
+        break;
+      default:
+        cout << "you have to choose between 1 - 4";
+        break;
+      }
+
+    } break;
+    case 3: {
+      cout << "The Result is:\n";
+      cout << "Processes waiting Time \n";
+      float average;
+      average = Average(processes, nbreofline);
+      Waiting_Time(processes, nbreofline);
+      cout << "Average :" << average << "ms \n";
+    }
+
+    break;
+    case 4: {
+      cout << "Exit Program, Thank you  \n";
+      float averages;
+      averages = Average(processes, nbreofline);
+
+      ofstream file;
+      file.open(output);
+
+      file << "Processes waiting Time \n";
+      for (int i = 0; i < nbreofline; i++) {
+        int *process = processes[i].Pro;
+        file << "P" << i + 1 << ": " << process[3] << "ms \n";
+      }
+
+      file << "Average :" << averages << "ms \n";
+      file.close();
+      finish = true;
+    }
+
+    break;
+    default:
+      cout << "you have to choose between 1 - 4";
+      break;
+    }
+   
+  }
+
+  return 0;
+}
