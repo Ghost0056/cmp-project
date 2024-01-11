@@ -247,3 +247,51 @@ int main(int argc, char *argv[]) {
     q++;
   }
 
+ int ActionTaken;
+  int i = 0;
+  bool finish = false;
+  while (finish == false) {
+    cout << "Choose Action : \n";
+    cout << "1. Scheduling Preemptinve\n";
+    cout << "2. Scheduling Non-Preemptinve\n";
+    cout << "3. Show Result\n";
+    cout << "4. End Program\n";
+    cin >> ActionTaken;
+
+    switch (ActionTaken) {
+    case 1: {
+      int preemptiveSchedulingOption;
+      cout << "Choose Between the five Scheduling Preemptinve Type \n";
+      cout << "1. None\n";
+      cout << "2. First Come, First Served Scheduling\n";
+      cout << "3. Shortest-Job-First Scheduling\n";
+      cout << "4. Priority Scheduling\n";
+      cout << "5. Round-Robin Scheduling\n";
+      cin >> preemptiveSchedulingOption;
+      switch (preemptiveSchedulingOption) {
+      case 1:
+        cout << "None\n";
+        break;
+      case 2:
+        cout << "First Come, First Serve Scheduling\n";
+        schedule_Preemptive(processes, 1, nbreofline);
+        break;
+      case 3:
+        cout << "Shortest Job First Scheduling\n";
+        schedule_Preemptive(processes, 0, nbreofline);
+        break;
+      case 4:
+        cout << "Priority Scheduling\n";
+        schedule_Preemptive(processes, 2, nbreofline);
+        break;
+      case 5:
+        cout << "Round Robin Scheduling\n";
+        cout << "Enter Quantum\n";
+        int quantum;
+        cin >> quantum;
+        Schedule_Round_Robin(processes, quantum, nbreofline);
+        break;
+      default:
+        cout << "you have to choose between 1 - 5";
+        break;
+      }
